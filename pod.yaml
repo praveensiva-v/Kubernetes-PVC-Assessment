@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-pvc-pod
+spec:
+  containers:
+    - name: storage-container
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'PVC mounted successfully' > /data/result.txt; sleep 3600"]
+      volumeMounts:
+        - name: persistent-storage
+          mountPath: /data
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:
+        claimName: jenkins-pvc
